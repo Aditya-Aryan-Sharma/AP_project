@@ -5,17 +5,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.game.HighScoreController">
+<AnchorPane blendMode="HARD_LIGHT" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.game.HighScoreController">
    <children>
       <Label layoutX="185.0" layoutY="14.0" text="High Score">
          <font>
-            <Font name="Cambria" size="50.0" />
+            <Font size="50.0" />
          </font>
       </Label>
-      <Button layoutX="508.0" layoutY="336.0" mnemonicParsing="false" onAction="#back" prefHeight="33.0" prefWidth="58.0" text="Back">
+      <Button blendMode="HARD_LIGHT" layoutX="534.0" layoutY="361.0" mnemonicParsing="false" onAction="#back" text="Close">
          <font>
-            <Font name="Cambria" size="13.0" />
+            <Font size="13.0" />
          </font>
       </Button>
    </children>
