@@ -21,7 +21,7 @@ public class MainController {
     private Parent root;
 
     public void playGame(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("PlayGame.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("playGameWindow.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -37,7 +37,11 @@ public class MainController {
     }
 
     public void loadGame(ActionEvent event) throws IOException{
+        System.out.println("GAME LOADED");
+    }
 
+    public void credits(ActionEvent event) throws IOException{
+        System.out.println("Developed by TUSHAR");
     }
 
     @FXML
@@ -48,9 +52,9 @@ public class MainController {
 
     public void exit(ActionEvent event) throws IOException{
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Logout");
-        alert.setHeaderText("Quit game");
-        alert.setContentText("Do you want to save before exiting?");
+        alert.setTitle("Quit Game");
+//        alert.setHeaderText("Quit game");
+        alert.setContentText("Do you want to quit game?");
 
         if(alert.showAndWait().get() == ButtonType.OK){
             stage = (Stage) scenePane.getScene().getWindow();
