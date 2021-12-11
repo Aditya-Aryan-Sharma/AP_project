@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.SepiaTone?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="scenePane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.game.MainController">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" layoutX="0" layoutY="0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="file:///D:/SEM_3/WillHero/Background.jpeg" />
+         </image>
+         <rotationAxis>
+            <Point3D x="1.0" y="1.0" z="1.0" />
+         </rotationAxis>
+      </ImageView>
+      <Button defaultButton="true" layoutX="36.0" layoutY="119.0" mnemonicParsing="false" onAction="#playGame" prefHeight="39.0" prefWidth="82.0" rotate="-12.4" snapToPixel="false" text="Play Game">
+         <font>
+            <Font name="Cambria" size="13.0" />
+         </font>
+         <rotationAxis>
+            <Point3D x="1.0" y="1.0" z="1.0" />
+         </rotationAxis>
+         <effect>
+            <SepiaTone />
+         </effect>
+      </Button>
+      <Button cacheShape="false" defaultButton="true" layoutX="36.0" layoutY="180.0" mnemonicParsing="false" onAction="#highScore" prefHeight="39.0" prefWidth="82.0" rotate="-12.4" snapToPixel="false" text="High Score">
+         <font>
+            <Font name="Cambria" size="13.0" />
+         </font>
+         <rotationAxis>
+            <Point3D x="1.0" y="1.0" z="1.0" />
+         </rotationAxis>
+         <effect>
+            <SepiaTone />
+         </effect>
+      </Button>
+      <Button defaultButton="true" layoutX="36.0" layoutY="244.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="82.0" rotate="-12.4" snapToPixel="false" text="Load Game">
+         <font>
+            <Font name="Cambria" size="13.0" />
+         </font>
+         <rotationAxis>
+            <Point3D x="1.0" y="1.0" z="1.0" />
+         </rotationAxis>
+         <effect>
+            <SepiaTone />
+         </effect>
+      </Button>
+      <Button fx:id="logoutButton" defaultButton="true" layoutX="42.0" layoutY="306.0" mnemonicParsing="false" onAction="#exit" prefHeight="39.0" prefWidth="82.0" rotate="-12.4" snapToPixel="false" text="Exit">
+         <font>
+            <Font name="Cambria" size="13.0" />
+         </font>
+         <rotationAxis>
+            <Point3D x="1.0" y="1.0" z="1.0" />
+         </rotationAxis>
+         <effect>
+            <SepiaTone />
+         </effect>
+      </Button>
+      <Label layoutX="262.0" layoutY="378.0" text="developed by TUSHAR" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
