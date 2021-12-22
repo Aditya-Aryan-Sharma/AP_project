@@ -1,15 +1,19 @@
 package com.example.game;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private int score;
     private String name;
     private int coinsEarned;
     private Hero myHero;
     private PlayGameWindowController myGame;
+
     public User(String name,int score ){
         this.name=name;
         this.score=score;
         this.coinsEarned=0;
+        this.myHero=new Hero();
     }
     public String getName(){
         return this.name;
@@ -23,5 +27,13 @@ public class User {
     public void setScore(int score){
         this.score =score;
     }
-
+    public int getCoinsEarned() {
+        return this.coinsEarned;
+    }
+    public void setCoinsEarned(int coinsEarned) {
+        this.coinsEarned = coinsEarned;
+    }
+    public Hero getMyHero() {
+        return myHero;
+    }
 }
