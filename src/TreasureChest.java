@@ -10,14 +10,17 @@ public class TreasureChest {
     }
 }
 class WeaponChest extends TreasureChest{
-    private Weapon weapon;
-    private int weaponType;
+    private final Weapon weapon;
+    private final int weaponType;
 
     public WeaponChest(){
         super(0);
         this.weapon = new Weapon();
         Random random = new Random();
         weaponType= random.nextInt(2);
+    }
+    public void equipHero(Hero hero){
+        hero.setMyWeapon(weapon);
     }
     public int getWeaponType() {
         return weaponType;
