@@ -60,23 +60,8 @@ public class PlayGameWindowController extends TimerTask implements Initializable
     private Label coordinate;
     @FXML
     private Label lose;
-    public void back(ActionEvent event) throws IOException{
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Exit");
-        alert.setContentText("Do you want to go to main menu?");
-        try {
-            if (alert.showAndWait().get() == ButtonType.OK) {
-                Parent root = FXMLLoader.load(getClass().getResource("mainWindow.fxml"));
-                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-            }
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-    }
+    @FXML
+    private Label win;
     @FXML
     private ImageView coinChest;
     @FXML
@@ -128,6 +113,23 @@ public class PlayGameWindowController extends TimerTask implements Initializable
     @FXML
     private ImageView island;
 
+    public void back(ActionEvent event) throws IOException{
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Exit");
+        alert.setContentText("Do you want to go to main menu?");
+        try {
+            if (alert.showAndWait().get() == ButtonType.OK) {
+                Parent root = FXMLLoader.load(getClass().getResource("mainWindow.fxml"));
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public void setLoadedGame(Boolean val){
         this.loadedGame=val;
@@ -138,7 +140,7 @@ public class PlayGameWindowController extends TimerTask implements Initializable
     private void rotateTransition(Double time,Node node,double angle ){
         RotateTransition rotateTransition = new RotateTransition(Duration.millis(time),node);
         rotateTransition.setByAngle(angle);
-        rotateTransition.setAutoReverse(true);
+        rotateTransition.setAutoReverse(false);
         rotateTransition.play();
     }
 
@@ -147,11 +149,12 @@ public class PlayGameWindowController extends TimerTask implements Initializable
         position=0;
         resurrectAvailable = true;
         lose.setVisible(false);
+        win.setText("");
         abyss = new int[]{-315,-290,-165,-140,-15,110,135,160,360,610,635,785,810,935,960,1085,1110,1260,1285,1410,1435,1760,1785,1910,1935,2060,2085,2110,2135};
         user=new User("",0);
         redOrc = new Orc(40,140,50,70,700);
         greenOrc = new Orc(100,200,1520,50,800);
-        greenBoss = new Boss(200,100,2500,30,500);
+        greenBoss = new Boss(200,100,2250,30,500);
         mySword.setVisible(false);myHammer.setVisible(false);
         takeInput();
         Timer timer = new Timer(true);
@@ -162,7 +165,7 @@ public class PlayGameWindowController extends TimerTask implements Initializable
                         takeChest(treasureChest1);takeChest(treasureChest2);takeChest(treasureChest3);takeChest(coinChest);
                         try {
                             explodeTNT(TNT1);explodeTNT(TNT3);explodeTNT(TNT2);
-                            jumpIslands();fightOrc();
+                            jumpIslands();//fightOrc();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -292,8 +295,9 @@ public class PlayGameWindowController extends TimerTask implements Initializable
             swordLevel.setText("0");
         else
             swordLevel.setText(String.valueOf(sword.getLevel()));
-        System.out.println(treasureChest1.getLayoutX()+" "+treasureChest1.getLayoutY());
-        System.out.println(user.getMyHero().getXCoordinates()+" "+user.getMyHero().getYCoordinates());
+        fightOrc();
+        System.out.println("Orc"+redOrc.getXCoordinates()+" "+redOrc.getYCoordinates());
+        System.out.println("Hero:"+user.getMyHero().getXCoordinates()+" "+user.getMyHero().getYCoordinates());
     }
     public boolean isCollide(int coordinate1,int coordinate2,int range){
         return coordinate1 <= coordinate2 + range && coordinate1 >= coordinate2 - range;
@@ -394,48 +398,68 @@ public class PlayGameWindowController extends TimerTask implements Initializable
         return false;
     }
     public void fightOrc() throws InterruptedException {
-        redOrc.fightHero(user.getMyHero(),15);
-        greenOrc.fightHero(user.getMyHero(),15);
-        greenBoss.fightHero(user.getMyHero(),113);
-        if ( !user.getMyHero().isAlive())
+        redOrc.fightHero(user.getMyHero(),13);
+        greenOrc.fightHero(user.getMyHero(),13);
+        greenBoss.fightHero(user.getMyHero(),15);
+        if ( !user.getMyHero().isAlive()) {
             resurrectHero();
-        /*if (user.getMyHero().killOrc(redOrc,15)) heroHelper(redOrc);
-        if (user.getMyHero().killOrc(greenOrc,15)) heroHelper(greenOrc);
-        if (user.getMyHero().killOrc(greenOrc,15)) heroHelper(greenOrc);*/
+            return;
+        }
+        if (user.getMyHero().fightingWith == redOrc){
+            rotateTransition(500.0,myHammer,180);
+            rotateTransition(500.0,mySword,180);
+            if (user.getMyHero().getMyWeapon()!=null)
+                myImage1.setTranslateX(25*((redOrc.getMaxHealth()-redOrc.getHitPoints())/user.getMyHero().getMyWeapon().getDamagePerHit()));
+            else
+            bossOrc.setTranslateX(25*((greenBoss.getMaxHealth()-greenBoss.getHitPoints())/20));
+            if (!redOrc.isAlive){
+                Animate(myImage1,Duration.millis(300),0,650,false);
+                myImage1.setLayoutY(1500);
+                redOrc.setXCoordinate(-540);
+            }
+        }
+        if (user.getMyHero().fightingWith == greenOrc){
+            rotateTransition(500.0,myHammer,90);
+            rotateTransition(500.0,mySword,150);
+            if (user.getMyHero().getMyWeapon()!=null)
+                orc.setTranslateX(25*((greenOrc.getMaxHealth()-greenOrc.getHitPoints())/user.getMyHero().getMyWeapon().getDamagePerHit()));
+            else
+                bossOrc.setTranslateX(25*((greenBoss.getMaxHealth()-greenBoss.getHitPoints())/20));
+            if (!greenOrc.isAlive){
+                Animate(orc,Duration.millis(300),0,650,false);
+                orc.setLayoutY(1500);
+                greenOrc.setXCoordinate(-540);
+            }
+        }
+        if (user.getMyHero().fightingWith == greenBoss){
+            rotateTransition(500.0,myHammer,90);
+            rotateTransition(500.0,mySword,150);
+            if (user.getMyHero().getMyWeapon()!=null)
+                bossOrc.setTranslateX(25*((greenBoss.getMaxHealth()-greenBoss.getHitPoints())/user.getMyHero().getMyWeapon().getDamagePerHit()));
+            else
+                bossOrc.setTranslateX(25*((greenBoss.getMaxHealth()-greenBoss.getHitPoints())/20));
+            if (!greenBoss.isBossAlive()){
+                Animate(bossOrc,Duration.millis(300),0,650,false);
+                bossOrc.setLayoutY(1500);
+                greenBoss.setXCoordinate(-540);
+                win.setText("YOU WIN");
+                btn.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        try {
+                            checkWinner(actionEvent);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        }
     }
-    public void heroHelper(Orc myOrc){
-        /*
-        int id=-1;
-        if (myOrc == redOrc && redOrc.isAlive)
-            id=0;
-        else if (myOrc == greenOrc && greenOrc.isAlive)
-            id=1;
-        else if (myOrc == greenBoss && greenBoss.isBossAlive())
-            id=2;
-        if (myOrc.getHitPoints()>0){
-            /*rotateTransition(1000.0,myHammer,90);
-            rotateTransition(1000.0,mySword,150);
-            rotateTransition(1000.0,heroGroup,90);
-            if (id == 0) myImage1.setTranslateX(myImage1.getLayoutX()+5);
-            if (id == 1) orc.setLayoutX(orc.getLayoutX()+5);
-            if (id == 2) bossOrc.setLayoutX(bossOrc.getLayoutX()+5);
-        }
-        else if (myOrc.getHitPoints()<=0){
-            if (id == 0) {
-                /*Animate(myImage1,Duration.millis(400),0,650,false);
-                redOrc.setAlive(false);
-                myImage1.setLayoutX(-500);
-            }
-            if (id == 1) {
-                Animate(orc,Duration.millis(400),0,650,false);
-                greenOrc.setAlive(false);
-                orc.setLayoutX(-500);
-            }
-            if (id == 2) {
-                Animate(bossOrc,Duration.millis(100),0,650,false);
-                greenBoss.setBossAlive();
-            }*/
-        }
+    public void checkWinner(ActionEvent actionEvent) throws InterruptedException {
+        Thread.sleep(1500);
+        endGame(actionEvent);
+    }
     public void resurrectHero() throws InterruptedException {
         //Thread.sleep(1000);
         if ((user.getCoinsEarned()<0 || ! resurrectAvailable) /*&& ! user.getMyHero().isAlive()*/) {
