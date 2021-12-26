@@ -7,25 +7,29 @@ import java.util.TimerTask;
 public class Hero extends TimerTask implements Serializable{
     private Weapon myWeapon;
     private int[][] coordinates;
-    boolean ret;
+    private boolean ret;
+    private final int baseLevel;
+    private boolean isAlive;
     public Hero(){
         ret = false;
         coordinates = new int[1][2];
+        isAlive = true;
         coordinates[0][0]=-540;
         coordinates[0][1]=45;              //Hardcoded values are from Scene Builder
         Timer timer = new Timer(true);
         TimerTask timerTask= this;
+        baseLevel = coordinates[0][1];
         timer.schedule(timerTask,0,150);
     }
 
     @Override
     public synchronized void run() {
         int y=getYCoordinates();
-        if (y==105)
+        if (y == baseLevel+60)
             ret = true;
-        if (y==45)
+        if (y == baseLevel)
             ret = false;
-        if(y <= 105 && y >= 45){
+        if(y <= baseLevel+60 && y >= baseLevel){
             if (ret){
                 this.setYCoordinates(getYCoordinates()-15);
             }
@@ -33,6 +37,10 @@ public class Hero extends TimerTask implements Serializable{
                 this.setYCoordinates(getYCoordinates()+15);
             }
         }
+    }
+    public void killOrc(Orc enemy){
+        enemy.setXCoordinate(enemy.getXCoordinates()+25);
+        enemy.setHitPoints(enemy.getHitPoints()-myWeapon.getDamagePerHit());
     }
 
     public Weapon getMyWeapon() {
@@ -52,5 +60,14 @@ public class Hero extends TimerTask implements Serializable{
     }
     public int getYCoordinates() {
         return coordinates[0][1];
+    }
+    public boolean isRet() {
+        return ret;
+    }
+    public boolean isAlive() {
+        return isAlive;
+    }
+    public void setAlive(boolean val){
+        isAlive = val;
     }
 }
