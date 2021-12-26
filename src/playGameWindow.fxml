@@ -340,19 +340,24 @@
                   <Image url="file:///C:/Users/shubh/IdeaProjects/Game/src/main/resources/com/example/game/Photos/Helmet.0.1.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="mySword" fitHeight="52.0" fitWidth="19.0" layoutX="-23.0" layoutY="-11.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+            <ImageView fx:id="mySword" fitHeight="52.0" fitWidth="19.0" layoutX="44.0" layoutY="-11.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
                <image>
                   <Image url="@Photos/WeaponSword.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="myHammer" fitHeight="23.0" fitWidth="46.0" layoutX="-11.0" layoutY="-15.0" pickOnBounds="true" preserveRatio="true" rotate="60.0">
+            <ImageView fx:id="myHammer" fitHeight="23.0" fitWidth="46.0" layoutX="11.0" layoutY="-15.0" pickOnBounds="true" preserveRatio="true" rotate="60.0">
                <image>
                   <Image url="@Photos/hammer.png" />
                </image>
             </ImageView>
          </children>
       </Group>
-      <Label fx:id="lose" layoutX="293.0" layoutY="141.0" prefHeight="80.0" prefWidth="144.0" text="You Lose" textFill="#ea0606">
+      <Label fx:id="lose" layoutX="238.0" layoutY="59.0" prefHeight="80.0" prefWidth="144.0" text="You Lose" textFill="#ea0606">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+      <Label fx:id="win" layoutX="377.0" layoutY="65.0" prefHeight="66.0" prefWidth="166.0" text="You Win" textFill="#ea0505">
          <font>
             <Font size="35.0" />
          </font>
