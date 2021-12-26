@@ -22,7 +22,7 @@
             <Image url="@Photos/Hammer.jpg" />
          </image>
       </ImageView>
-      <Button layoutX="672.0" layoutY="431.0" mnemonicParsing="false" onAction="#moveHero" text="Move" />
+      <Button fx:id="btn" layoutX="672.0" layoutY="431.0" mnemonicParsing="false" onAction="#moveHero" text="Move" />
       <ImageView fitHeight="52.0" fitWidth="41.0" layoutX="-2.0" layoutY="-2.0" onMouseClicked="#pressSettingButton" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Photos/1.0.jpg" />
@@ -61,7 +61,7 @@
                   <Image url="@Photos/1.2.3.jpg" />
                </image>
             </ImageView>
-            <ImageView fx:id="island" fitHeight="237.0" fitWidth="178.0" layoutX="360.0" layoutY="-66.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="island5" fitHeight="237.0" fitWidth="178.0" layoutX="360.0" layoutY="-66.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Photos/1.0.png" />
                </image>
@@ -101,20 +101,11 @@
                   <Image url="@Photos/1.0.png" />
                </image>
             </ImageView>
-            <Group fx:id="myGroup3" layoutX="540.0" layoutY="100.0">
-               <children>
-                  <ImageView fitHeight="220.0" fitWidth="135.0" layoutX="257.0" layoutY="-150.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Photos/1.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="40.0" fitWidth="41.0" layoutX="317.0" layoutY="-51.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Photos/treasurechest.jpg" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Group>
+            <ImageView fitHeight="220.0" fitWidth="135.0" layoutX="808.0" layoutY="-63.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Photos/1.png" />
+               </image>
+            </ImageView>
             <Group layoutX="1254.0" layoutY="-14.0">
                <children>
                   <ImageView fitHeight="20.0" fitWidth="8.0" layoutX="20.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
@@ -149,12 +140,12 @@
                   </ImageView>
                </children>
             </Group>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="974.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="974.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Photos/p1.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="orc" fitHeight="52.0" fitWidth="61.0" layoutX="1513.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="orc" fitHeight="52.0" fitWidth="61.0" layoutX="1511.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Photos/Orc2.png" />
                </image>
@@ -194,12 +185,12 @@
                   <Image url="@Photos/5.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="220.0" fitWidth="212.0" layoutX="1779.0" layoutY="-71.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="island" fitHeight="220.0" fitWidth="212.0" layoutX="1779.0" layoutY="-71.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Photos/1.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="island1" fitHeight="214.0" fitWidth="162.0" layoutX="1934.0" layoutY="-61.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="island15" fitHeight="214.0" fitWidth="162.0" layoutX="1934.0" layoutY="-61.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Photos/1.0.png" />
                </image>
@@ -309,6 +300,16 @@
                   <Image url="@Photos/BombExplosion1.jpg" />
                </image>
             </ImageView>
+            <ImageView fx:id="coinChest" fitHeight="40.0" fitWidth="41.0" layoutX="1023.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Photos/treasurechest.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="openCoinChest" fitHeight="40.0" fitWidth="41.0" layoutX="1018.0" layoutY="-284.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Photos/d4229cb2-b583-4013-850c-68dcdf824ecf.jpg" />
+               </image>
+            </ImageView>
          </children>
       </Group>
       <Label fx:id="coordinate" layoutX="315.0" layoutY="10.0" prefHeight="64.0" prefWidth="108.0" textAlignment="RIGHT">
@@ -344,12 +345,17 @@
                   <Image url="@Photos/WeaponSword.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="myHammer" fitHeight="34.0" fitWidth="19.0" layoutX="-13.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true" rotate="-45.0">
+            <ImageView fx:id="myHammer" fitHeight="23.0" fitWidth="46.0" layoutX="-11.0" layoutY="-15.0" pickOnBounds="true" preserveRatio="true" rotate="60.0">
                <image>
-                  <Image url="@Photos/thor-hammer-for-kids--mw-132203-1.jpg" />
+                  <Image url="@Photos/hammer.png" />
                </image>
             </ImageView>
          </children>
       </Group>
+      <Label fx:id="lose" layoutX="293.0" layoutY="141.0" prefHeight="80.0" prefWidth="144.0" text="You Lose" textFill="#ea0606">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
