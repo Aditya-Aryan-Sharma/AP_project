@@ -6,13 +6,15 @@ import java.util.TimerTask;
 
 public class Hero extends TimerTask implements Serializable{
     private Weapon myWeapon;
-    private int[][] coordinates;
+    private final int[][] coordinates;
     private boolean ret;
     private final int baseLevel;
     private boolean isAlive;
+    protected Orc fightingWith;
     public Hero(){
         ret = false;
         coordinates = new int[1][2];
+        fightingWith = null;
         isAlive = true;
         coordinates[0][0]=-540;
         coordinates[0][1]=45;              //Hardcoded values are from Scene Builder
@@ -40,7 +42,16 @@ public class Hero extends TimerTask implements Serializable{
     }
     public void killOrc(Orc enemy){
         enemy.setXCoordinate(enemy.getXCoordinates()+25);
-        enemy.setHitPoints(enemy.getHitPoints()-myWeapon.getDamagePerHit());
+        if (myWeapon != null)
+            enemy.setHitPoints(enemy.getHitPoints()-myWeapon.getDamagePerHit());
+        else
+            enemy.setHitPoints(enemy.getHitPoints()-20);
+        fightingWith = enemy;
+        if (enemy.getHitPoints()<=0)
+            enemy.setAlive(false);
+        if (enemy instanceof Boss && enemy.getHitPoints()<=0){
+            ((Boss) enemy).setBossAlive();
+        }
     }
 
     public Weapon getMyWeapon() {
