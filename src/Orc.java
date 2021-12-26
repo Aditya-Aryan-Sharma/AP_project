@@ -8,10 +8,12 @@ public class Orc extends TimerTask {
     private int[][] coordinates;
     private final int baseLevel;
     private boolean ret;
-    private int distance;
+    private final int distance;
+    protected boolean isAlive;
     public Orc(int points, int period,int xCoordinate,int distance,int duration){
         this.hitPoints = points;
         ret = false;
+        isAlive = true;
         coordinates = new int[1][2];
         coordinates[0][0] = xCoordinate;
         coordinates[0][1] = 45;
@@ -37,7 +39,23 @@ public class Orc extends TimerTask {
             }
         }
     }
-    public void killHero(Hero hero, int range){
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
+    public void fightHero(Hero hero, int orcRange){
+        if (isCollide(hero.getXCoordinates(),getXCoordinates(),orcRange)){
+            if (getYCoordinates()- hero.getYCoordinates()>0 && getYCoordinates()- hero.getYCoordinates()<10){
+                hero.setAlive(false);
+            }
+            else if (hero.getYCoordinates()>getYCoordinates()){
+                hero.killOrc(this);
+            }
+        }
     }
     public boolean isCollide(int coordinate1,int coordinate2,int range){
         return coordinate1 <= coordinate2 + range && coordinate1 >= coordinate2 - range;
@@ -45,13 +63,15 @@ public class Orc extends TimerTask {
     private void setYCoordinates(int y) {
         this.coordinates[0][1] = y;
     }
-
-    private int getYCoordinates() {
+    public int getYCoordinates() {
         return coordinates[0][1];
     }
-    private int getXCoordinates(){
+    public int getXCoordinates(){
         return coordinates[0][0];
     }
+    public void setXCoordinate(int x){ coordinates[0][0] = x;}
+    public int getHitPoints() {return hitPoints;}
+    public void setHitPoints(int hitPoints) {this.hitPoints = hitPoints;}
 }
 class Boss extends Orc{
     private boolean bossAlive;
@@ -59,5 +79,10 @@ class Boss extends Orc{
         super(points, period, xCoordinate,distance,duration);
         this.bossAlive = true;
     }
-
+    public void setBossAlive(){
+        this.bossAlive = false;
+    }
+    public boolean isBossAlive() {
+        return bossAlive;
+    }
 }
