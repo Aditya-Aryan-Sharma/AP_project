@@ -5,13 +5,15 @@ import java.util.TimerTask;
 
 public class Orc extends TimerTask {
     private int hitPoints;
-    private int[][] coordinates;
+    private final int[][] coordinates;
     private final int baseLevel;
     private boolean ret;
     private final int distance;
     protected boolean isAlive;
+    private final int maxHealth;
     public Orc(int points, int period,int xCoordinate,int distance,int duration){
         this.hitPoints = points;
+        maxHealth = points;
         ret = false;
         isAlive = true;
         coordinates = new int[1][2];
@@ -39,8 +41,9 @@ public class Orc extends TimerTask {
             }
         }
     }
-    public boolean isAlive() {
-        return isAlive;
+
+    public int getMaxHealth() {
+        return maxHealth;
     }
 
     public void setAlive(boolean alive) {
@@ -49,7 +52,7 @@ public class Orc extends TimerTask {
 
     public void fightHero(Hero hero, int orcRange){
         if (isCollide(hero.getXCoordinates(),getXCoordinates(),orcRange)){
-            if (getYCoordinates()- hero.getYCoordinates()>0 && getYCoordinates()- hero.getYCoordinates()<10){
+            if (getYCoordinates()- hero.getYCoordinates()>=0 && getYCoordinates()- hero.getYCoordinates()<10){
                 hero.setAlive(false);
             }
             else if (hero.getYCoordinates()>getYCoordinates()){
