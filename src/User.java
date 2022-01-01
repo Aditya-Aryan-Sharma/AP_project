@@ -36,4 +36,7 @@ public class User implements Serializable {
     public Hero getMyHero() {
         return myHero;
     }
+    public void setMyHero(Hero myHero) {
+        this.myHero = myHero;
+    }
 }
