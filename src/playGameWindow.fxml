@@ -23,11 +23,6 @@
          </image>
       </ImageView>
       <Button fx:id="btn" layoutX="672.0" layoutY="431.0" mnemonicParsing="false" onAction="#moveHero" text="Move" />
-      <ImageView fitHeight="52.0" fitWidth="41.0" layoutX="-2.0" layoutY="-2.0" onMouseClicked="#pressSettingButton" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/1.0.jpg" />
-         </image>
-      </ImageView>
       <Label fx:id="hammerLevel" layoutX="353.0" layoutY="433.0" prefHeight="20.0" prefWidth="19.0" text="0" />
       <ImageView fx:id="swordIcon" fitHeight="80.0" fitWidth="109.0" layoutX="383.0" layoutY="373.0" opacity="0.36" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -145,11 +140,6 @@
                   <Image url="@Photos/p1.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="orc" fitHeight="52.0" fitWidth="61.0" layoutX="1511.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Photos/Orc2.png" />
-               </image>
-            </ImageView>
             <ImageView fitHeight="221.0" fitWidth="188.0" layoutX="1294.0" layoutY="-73.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Photos/1.png" />
@@ -178,6 +168,11 @@
             <ImageView fx:id="treasureChest3" fitHeight="40.0" fitWidth="30.0" layoutX="1669.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Photos/1.4.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="orc" fitHeight="52.0" fitWidth="61.0" layoutX="1511.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Photos/Orc2.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="20.0" fitWidth="8.0" layoutX="549.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
@@ -352,6 +347,11 @@
             </ImageView>
          </children>
       </Group>
+      <ImageView fitHeight="52.0" fitWidth="41.0" layoutX="-2.0" layoutY="-2.0" onMouseClicked="#pressSettingButton" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/1.0.jpg" />
+         </image>
+      </ImageView>
       <Label fx:id="lose" layoutX="238.0" layoutY="59.0" prefHeight="80.0" prefWidth="144.0" text="You Lose" textFill="#ea0606">
          <font>
             <Font size="35.0" />
