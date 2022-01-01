@@ -1,4 +1,4 @@
-package com.example.game;
+package com.example.willhero;
 
 import javafx.animation.*;
 import javafx.application.Platform;
@@ -49,6 +49,7 @@ public class PlayGameWindowController extends TimerTask implements Initializable
         translateTransition.setAutoReverse(reverse);
         translateTransition.play();
     }
+
     @FXML
     private Button btn;
     @FXML
@@ -111,6 +112,38 @@ public class PlayGameWindowController extends TimerTask implements Initializable
     private ImageView treasureChest1;
     @FXML
     private ImageView island;
+    @FXML
+    private ImageView coin1;
+    @FXML
+    private ImageView coin2;
+    @FXML
+    private ImageView coin3;
+    @FXML
+    private ImageView coin4;
+    @FXML
+    private ImageView coin5;
+    @FXML
+    private ImageView coin6;
+    @FXML
+    private ImageView coin7;
+    @FXML
+    private ImageView coin8;
+    @FXML
+    private ImageView coin9;
+    @FXML
+    private ImageView coin10;
+    @FXML
+    private ImageView coin11;
+    @FXML
+    private ImageView coin12;
+    @FXML
+    private ImageView coin13;
+    @FXML
+    private ImageView coin14;
+    @FXML
+    private ImageView coin15;
+    @FXML
+    private ImageView coin16;
 
     public void back(ActionEvent event) throws IOException{
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -197,9 +230,22 @@ public class PlayGameWindowController extends TimerTask implements Initializable
         stage.setWidth(200);
         Button button1 = new Button("Save Game");
         Button reloadGame = new Button("Reload Game");
-        button1.setPrefWidth(80);
-        button1.setTextAlignment(TextAlignment.LEFT);
-        button1.setLayoutX(0); button1.setLayoutY(5);
+//        Button credit = new Button("Credit");
+        CheckBox checkBox = new CheckBox("Music");
+
+        reloadGame.setPrefWidth(90); reloadGame.setPrefHeight(25);
+//        credit.setPrefWidth(90); credit.setPrefHeight(25);
+        button1.setPrefWidth(90); button1.setPrefHeight(25);
+
+        button1.setTextAlignment(TextAlignment.CENTER);
+        reloadGame.setTextAlignment(TextAlignment.CENTER);
+//        credit.setTextAlignment(TextAlignment.CENTER);
+
+        button1.setLayoutX(65); button1.setLayoutY(20);
+        reloadGame.setLayoutX(65); reloadGame.setLayoutY(60);
+//        credit.setLayoutX(65); credit.setLayoutY(100);
+        checkBox.setLayoutX(65); checkBox.setLayoutY(140);
+
         button1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -211,8 +257,7 @@ public class PlayGameWindowController extends TimerTask implements Initializable
                 }
             }
         });
-        button1.setTextAlignment(TextAlignment.RIGHT);
-        reloadGame.setLayoutX(55); reloadGame.setLayoutY(50);
+
         reloadGame.setOnAction(event -> {
             try {
                 deSerialise(event);
@@ -221,21 +266,20 @@ public class PlayGameWindowController extends TimerTask implements Initializable
                 e.printStackTrace();
             }
         });
-        CheckBox checkBox = new CheckBox("Music");
-        checkBox.setLayoutX(55); checkBox.setLayoutY(90);
 
         anchorPane.getChildren().addAll(button1, checkBox,reloadGame);
 
         Image image = new Image("file:///C:/Users/shubh/IdeaProjects/Game/src/main/resources/com/example/game/Photos/1.0.png");
 
         Scene scene = new Scene(anchorPane);
-        stage.setWidth(200);
-        stage.setHeight(300);
+        stage.setWidth(230);
+        stage.setHeight(250);
         stage.setResizable(false);
         stage.getIcons().setAll(image);
         stage.setScene(scene);
         stage.show();
     }
+
     public void serialize() throws IOException{
         ObjectOutputStream outUser=null;
         try{
@@ -334,6 +378,7 @@ public class PlayGameWindowController extends TimerTask implements Initializable
     public void moveHero() throws InterruptedException {
         position+=25;
         user.setScore(user.getScore()+1);
+        collectCoin(user.getMyHero().getXCoordinates(), user.getMyHero().getYCoordinates());
         coordinate.setText(String.valueOf(user.getScore()));
         coins.setText(String.valueOf(user.getCoinsEarned()));
         myGroup.setTranslateX(-position);
@@ -563,5 +608,39 @@ public class PlayGameWindowController extends TimerTask implements Initializable
     }
     @Override
     public void run() {
+    }
+
+    public void collectCoin(int x, int y){
+        if (x == -265) {
+            coin1.setVisible(false);
+            coin2.setVisible(false);
+            user.setCoinsEarned(user.getCoinsEarned()+4);
+        } else if (x == -240) {
+            coin3.setVisible(false);
+            coin4.setVisible(false);
+            coin5.setVisible(false);
+            coin6.setVisible(false);
+            user.setCoinsEarned(user.getCoinsEarned()+8);
+        } else if (x == 485) {
+            coin7.setVisible(false);
+            user.setCoinsEarned(user.getCoinsEarned()+2);
+        } else if (x == 510) {
+            coin8.setVisible(false);
+            user.setCoinsEarned(user.getCoinsEarned()+2);
+        } else if (x == 535) {
+            coin9.setVisible(false);
+            coin10.setVisible(false);
+            user.setCoinsEarned(user.getCoinsEarned()+4);
+        } else if (x == 1235) {
+            coin12.setVisible(false);
+            coin11.setVisible(false);
+            user.setCoinsEarned(user.getCoinsEarned()+4);
+        } else if (x == 1260 && y>=75) {
+            coin13.setVisible(false);
+            coin14.setVisible(false);
+            coin15.setVisible(false);
+            coin16.setVisible(false);
+            user.setCoinsEarned(user.getCoinsEarned()+8);
+        }
     }
 }
