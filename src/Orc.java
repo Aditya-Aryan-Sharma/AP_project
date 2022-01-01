@@ -1,38 +1,42 @@
 package com.example.game;
 
+import java.io.Serializable;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Orc extends TimerTask {
+public class Orc extends TimerTask implements Serializable,floatInAir {
     private int hitPoints;
     private final int[][] coordinates;
-    private final int baseLevel;
+    private final int[][] baseLevel;
     private boolean ret;
     private final int distance;
     protected boolean isAlive;
     private final int maxHealth;
+    private final int period;
+
     public Orc(int points, int period,int xCoordinate,int distance,int duration){
         this.hitPoints = points;
         maxHealth = points;
         ret = false;
         isAlive = true;
         coordinates = new int[1][2];
+        baseLevel =new int[1][2];
         coordinates[0][0] = xCoordinate;
         coordinates[0][1] = 45;
-        baseLevel = coordinates[0][1];
+        baseLevel[0][1] = coordinates[0][1];
+        baseLevel[0][0] = xCoordinate;
         this.distance = (distance/duration)*period;
-        Timer timer = new Timer(true);
-        TimerTask timerTask = this;
-        timer.schedule(timerTask,0,period);
+        this.period = period;
+        changeYCoordinate();
     }
     @Override
     public void run() {
         int y=getYCoordinates();
-        if (y == baseLevel+70)
+        if (y == baseLevel[0][1]+70)
             ret = true;
-        if (y == baseLevel)
+        if (y == baseLevel[0][1])
             ret = false;
-        if(y <= baseLevel+70 && y >= baseLevel){
+        if(y <= baseLevel[0][1]+70 && y >= baseLevel[0][1]){
             if (ret){
                 this.setYCoordinates(getYCoordinates() - distance);
             }
@@ -75,6 +79,16 @@ public class Orc extends TimerTask {
     public void setXCoordinate(int x){ coordinates[0][0] = x;}
     public int getHitPoints() {return hitPoints;}
     public void setHitPoints(int hitPoints) {this.hitPoints = hitPoints;}
+
+    @Override
+    public void changeYCoordinate() {
+        Timer timer = new Timer(true);
+        TimerTask timerTask = this;
+        timer.schedule(timerTask,0,period);
+    }
+    public int getBaseX(){
+        return baseLevel[0][0];
+    }
 }
 class Boss extends Orc{
     private boolean bossAlive;
