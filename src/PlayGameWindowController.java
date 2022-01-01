@@ -29,12 +29,11 @@ public class PlayGameWindowController extends TimerTask implements Initializable
     private Stage stage;
     private Scene scene;
     private User user;
-    private boolean loadedGame=false;
     private WeaponChest chest1;
     private Weapon sword;
     private Weapon hammer;
     private int[] abyss;
-    private boolean gotChest,resurrectAvailable;
+    private boolean gotChest;
     private Orc redOrc;
     private Orc greenOrc;
     private Boss greenBoss;
@@ -131,12 +130,6 @@ public class PlayGameWindowController extends TimerTask implements Initializable
         }
     }
 
-    public void setLoadedGame(Boolean val){
-        this.loadedGame=val;
-    }
-    public boolean isLoadedGame() {
-        return loadedGame;
-    }
     private void rotateTransition(Double time,Node node,double angle ){
         RotateTransition rotateTransition = new RotateTransition(Duration.millis(time),node);
         rotateTransition.setByAngle(angle);
@@ -147,7 +140,6 @@ public class PlayGameWindowController extends TimerTask implements Initializable
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
         position=0;
-        resurrectAvailable = true;
         lose.setVisible(false);
         win.setText("");
         abyss = new int[]{-315,-290,-165,-140,-15,110,135,160,360,610,635,785,810,935,960,1085,1110,1260,1285,1410,1435,1760,1785,1910,1935,2060,2085,2110,2135};
@@ -173,19 +165,6 @@ public class PlayGameWindowController extends TimerTask implements Initializable
                 });
             }
         }, 0, 150);
-        if (isLoadedGame()){
-            try {
-                deSerialise();
-                System.out.println("GAME LOADED");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            finally{
-                myGroup.setTranslateX(-user.getScore() * 25);
-                coordinate.setText(String.valueOf(user.getScore()));
-                coins.setText(String.valueOf(user.getCoinsEarned()));
-            }
-        }
         Animate(heroGroup,Duration.millis(600),1,-60,true);
         Animate(myImage1,Duration.millis(700),1,-70,true);
         Animate(island5,Duration.millis(2000),1,-15,true);
@@ -217,6 +196,7 @@ public class PlayGameWindowController extends TimerTask implements Initializable
         stage.setHeight(200);
         stage.setWidth(200);
         Button button1 = new Button("Save Game");
+        Button reloadGame = new Button("Reload Game");
         button1.setPrefWidth(80);
         button1.setTextAlignment(TextAlignment.LEFT);
         button1.setLayoutX(0); button1.setLayoutY(5);
@@ -231,11 +211,20 @@ public class PlayGameWindowController extends TimerTask implements Initializable
                 }
             }
         });
-
+        button1.setTextAlignment(TextAlignment.RIGHT);
+        reloadGame.setLayoutX(55); reloadGame.setLayoutY(50);
+        reloadGame.setOnAction(event -> {
+            try {
+                deSerialise(event);
+                System.out.println("GAME LOADED");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         CheckBox checkBox = new CheckBox("Music");
         checkBox.setLayoutX(55); checkBox.setLayoutY(90);
 
-        anchorPane.getChildren().addAll(button1, checkBox);
+        anchorPane.getChildren().addAll(button1, checkBox,reloadGame);
 
         Image image = new Image("file:///C:/Users/shubh/IdeaProjects/Game/src/main/resources/com/example/game/Photos/1.0.png");
 
@@ -248,36 +237,99 @@ public class PlayGameWindowController extends TimerTask implements Initializable
         stage.show();
     }
     public void serialize() throws IOException{
-        ObjectOutputStream out=null;
+        ObjectOutputStream outUser=null;
         try{
-            out=new ObjectOutputStream(new FileOutputStream("C:\\Users\\shubh\\IdeaProjects\\Game\\src\\main\\java\\com\\example\\game\\savedGame.txt"));
-            out.writeObject(this.user);
+            outUser=new ObjectOutputStream(new FileOutputStream("C:\\Users\\shubh\\IdeaProjects\\Game\\src\\main\\java\\com\\example\\game\\savedUsers.txt"));
+            outUser.writeObject(this.user);
         }
         catch(Exception e){
-            System.out.println("Error were Encountered while Saving Game");
+            System.out.println("Error were Encountered while Saving User");
         }
         finally {
-            if (out!=null){
-                out.close();
+            if (outUser!=null){
+                outUser.close();
+            }
+        }
+        serializeOrcs();
+    }
+    public void serializeOrcs() throws IOException{
+        ObjectOutputStream outOrc = null;
+        try{
+            outOrc=new ObjectOutputStream(new FileOutputStream("C:\\Users\\shubh\\IdeaProjects\\Game\\src\\main\\java\\com\\example\\game\\savedOrcs.txt"));
+            outOrc.writeObject(this.redOrc);
+            outOrc.writeObject(this.greenOrc);
+            outOrc.writeObject(this.greenBoss);
+        }
+        catch (Exception e) {
+            System.out.println("Error were Encountered while Saving Orc");
+        }
+        finally {
+            if (outOrc!=null){
+                outOrc.close();
             }
         }
     }
-    public void deSerialise() throws IOException,ClassNotFoundException{
+    public void deSerialise(ActionEvent event) throws Exception{
         ObjectInputStream in = null;
-        User myUser=new User("",0);
+        ObjectInputStream inOrc = null;
+        User myUser = this.user;
+        /*Orc rOrc = this.redOrc;
+        Orc gOrc = this.greenOrc;
+        Orc gBoss = this.greenBoss;*/
         try{
-            in = new ObjectInputStream(new FileInputStream("C:\\Users\\shubh\\IdeaProjects\\Game\\src\\main\\java\\com\\example\\game\\savedGame.txt"));
-            myUser = (User)in.readObject();
+            in = new ObjectInputStream(new FileInputStream("C:\\Users\\shubh\\IdeaProjects\\Game\\src\\main\\java\\com\\example\\game\\savedUsers.txt"));
+            this.user = (User)in.readObject();
+            inOrc = new ObjectInputStream(new FileInputStream("C:\\Users\\shubh\\IdeaProjects\\Game\\src\\main\\java\\com\\example\\game\\savedOrcs.txt"));
+            this.redOrc = (Orc)inOrc.readObject();
+            this.greenOrc = (Orc)inOrc.readObject();
+            this.greenBoss = (Boss)inOrc.readObject();
         }
         catch(Exception e){
-            System.out.println("Error were Encountered while Loading Game");
+            System.out.println("Errors were Encountered while Loading Game");
+            endGame(event);
         }
         finally {
             if (in!=null){
                 in.close();
             }
-            this.user=myUser;
+            Hero hero = user.getMyHero();
+            this.user.setMyHero(myUser.getMyHero());
+
+            setUpLoadedGame(hero);
         }
+        System.out.println("user Name= "+ user.getName());
+    }
+    private synchronized void setUpLoadedGame(Hero hero){
+        fadeAnimation(myGroup,Duration.millis(3000),0.36,1.0);
+        Animate(textGroup,Duration.millis(50),0,-175,true);
+        user.getMyHero().setXCoordinates(user.getMyHero().getXCoordinates()+25*user.getScore());
+        user.getMyHero().setMyWeapon(hero.getMyWeapon());
+        if (user.getCoinsEarned() > 0)
+            coins.setText(String.valueOf(user.getCoinsEarned()));
+        if (hero.getWeapons()[0] != null){
+            hammerIcon.setOpacity(1.0);
+            user.getMyHero().setWeapons(0,hero.getWeapons()[0]);
+            hammerLevel.setText(String.valueOf(user.getMyHero().getWeapons()[0].getLevel()));
+        }
+        if (hero.getWeapons()[1]!=null){
+            swordIcon.setOpacity(1.0);
+            user.getMyHero().setWeapons(1,hero.getWeapons()[1]);
+            swordLevel.setText(String.valueOf(user.getMyHero().getWeapons()[1].getLevel()));
+        }
+        if (hero.getMyWeapon() != null){
+            if (hero.getMyWeapon().getWeaponType() == 0) {
+                myHammer.setVisible(true);
+            }
+            else if (hero.getMyWeapon().getWeaponType() == 1) {
+                mySword.setVisible(true);
+            }
+        }
+        myImage1.setTranslateX(redOrc.getXCoordinates()-redOrc.getBaseX());
+        orc.setTranslateX(greenOrc.getXCoordinates()-greenOrc.getBaseX());
+        bossOrc.setTranslateX(greenBoss.getXCoordinates()-greenBoss.getBaseX());
+        myGroup.setTranslateX(-user.getScore() * 25);
+        coordinate.setText(String.valueOf(user.getScore()));
+        position = user.getScore() * 25;
     }
     public void moveHero() throws InterruptedException {
         position+=25;
@@ -287,17 +339,18 @@ public class PlayGameWindowController extends TimerTask implements Initializable
         myGroup.setTranslateX(-position);
         gotChest = true;
         user.getMyHero().setXCoordinates(user.getMyHero().getXCoordinates()+25);
-        if (hammer==null)
+        if (user.getMyHero().getWeapons()[0]!=null)
+            hammerLevel.setText(String.valueOf(user.getMyHero().getWeapons()[0].getLevel()));
+        else
             hammerLevel.setText("0");
+        if (user.getMyHero().getWeapons()[1]!=null)
+            swordLevel.setText(String.valueOf(user.getMyHero().getWeapons()[1].getLevel()));
         else
-            hammerLevel.setText(String.valueOf(hammer.getLevel()));
-        if (sword==null)
             swordLevel.setText("0");
-        else
-            swordLevel.setText(String.valueOf(sword.getLevel()));
         fightOrc();
         System.out.println("Orc"+redOrc.getXCoordinates()+" "+redOrc.getYCoordinates());
         System.out.println("Hero:"+user.getMyHero().getXCoordinates()+" "+user.getMyHero().getYCoordinates());
+        System.out.println("TChest2: "+ treasureChest2.getLayoutX()+ " "+ treasureChest2.getLayoutY());
     }
     public boolean isCollide(int coordinate1,int coordinate2,int range){
         return coordinate1 <= coordinate2 + range && coordinate1 >= coordinate2 - range;
@@ -326,11 +379,9 @@ public class PlayGameWindowController extends TimerTask implements Initializable
                     fadeAnimation(hammerIcon, Duration.millis(20), 0.36, 1.0);
                     chest1.equipHero(user.getMyHero());
                 } else {
-                    hammer.setDamagePerHit(hammer.getDamagePerHit() + 20);
-                    hammer.setLevel(hammer.getLevel() + 1);
                     user.getMyHero().setMyWeapon(hammer);
                 }
-                hammerLevel.setText(String.valueOf(hammer.getLevel()));
+                user.getMyHero().addWeapons(hammer,chest1);
             }
             if (chest1.getWeaponType() == 1) {
                 mySword.setVisible(true);
@@ -340,11 +391,10 @@ public class PlayGameWindowController extends TimerTask implements Initializable
                     fadeAnimation(swordIcon, Duration.millis(20), 0.36, 1.0);
                     chest1.equipHero(user.getMyHero());
                 } else {
-                    sword.setDamagePerHit(sword.getDamagePerHit() + 20);
-                    sword.setLevel(sword.getLevel() + 1);
                     user.getMyHero().setMyWeapon(sword);
                 }
-                swordLevel.setText(String.valueOf(sword.getLevel()));
+                user.getMyHero().addWeapons(sword,chest1);
+                swordLevel.setText(String.valueOf(user.getMyHero().getWeapons()[1].getLevel()));
             }
         }
     }
@@ -411,7 +461,7 @@ public class PlayGameWindowController extends TimerTask implements Initializable
             if (user.getMyHero().getMyWeapon()!=null)
                 myImage1.setTranslateX(25*((redOrc.getMaxHealth()-redOrc.getHitPoints())/user.getMyHero().getMyWeapon().getDamagePerHit()));
             else
-            bossOrc.setTranslateX(25*((greenBoss.getMaxHealth()-greenBoss.getHitPoints())/20));
+                myImage1.setTranslateX(25*((redOrc.getMaxHealth()-redOrc.getHitPoints())/20));
             if (!redOrc.isAlive){
                 Animate(myImage1,Duration.millis(300),0,650,false);
                 myImage1.setLayoutY(1500);
@@ -424,7 +474,7 @@ public class PlayGameWindowController extends TimerTask implements Initializable
             if (user.getMyHero().getMyWeapon()!=null)
                 orc.setTranslateX(25*((greenOrc.getMaxHealth()-greenOrc.getHitPoints())/user.getMyHero().getMyWeapon().getDamagePerHit()));
             else
-                bossOrc.setTranslateX(25*((greenBoss.getMaxHealth()-greenBoss.getHitPoints())/20));
+                orc.setTranslateX(25*((greenOrc.getMaxHealth()-greenOrc.getHitPoints())/20));
             if (!greenOrc.isAlive){
                 Animate(orc,Duration.millis(300),0,650,false);
                 orc.setLayoutY(1500);
@@ -461,8 +511,7 @@ public class PlayGameWindowController extends TimerTask implements Initializable
         endGame(actionEvent);
     }
     public void resurrectHero() throws InterruptedException {
-        //Thread.sleep(1000);
-        if ((user.getCoinsEarned()<0 || ! resurrectAvailable) /*&& ! user.getMyHero().isAlive()*/) {
+        if ((user.getCoinsEarned()<0 || ! user.getMyHero().isResurrectAvailable()) /*&& ! user.getMyHero().isAlive()*/) {
             lose.setVisible(true);
             btn.setOnAction(new EventHandler<>() {
                 @Override
@@ -472,21 +521,22 @@ public class PlayGameWindowController extends TimerTask implements Initializable
             });
             return;
         }
-        if (resurrectAvailable) {
+        if (user.getMyHero().isResurrectAvailable()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Save Hero");
             alert.setContentText("Do you want to save the Hero ?");
-            resurrectAvailable = false;
+            user.getMyHero().setResurrectAvailable(false);
             try {
                 if (alert.showAndWait().get() == ButtonType.OK) {
                     user.setCoinsEarned(user.getCoinsEarned() - 5);
                     user.getMyHero().setAlive(true);
                     int i = 0;
-                    while (i < 3) {
+                    while (i < 5) {
                         if (!checkAbyss(user.getMyHero().getXCoordinates() + 25 * i)) {
                             user.getMyHero().setXCoordinates(user.getMyHero().getXCoordinates() + 25 * i);
                             fadeAnimation(heroGroup, Duration.millis(200), 0, 1.0);
                             position += 25 * i;
+                            user.setScore(user.getScore()+i);
                             myGroup.setTranslateX(-position);
                             break;
                         }
