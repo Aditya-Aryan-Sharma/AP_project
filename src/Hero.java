@@ -4,24 +4,25 @@ import java.io.Serializable;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Hero extends TimerTask implements Serializable{
+public class Hero extends TimerTask implements Serializable,floatInAir{
+    private Weapon[] weapons;
     private Weapon myWeapon;
     private final int[][] coordinates;
     private boolean ret;
-    private final int baseLevel;
+    private int baseLevel;
     private boolean isAlive;
     protected Orc fightingWith;
+    private boolean resurrectAvailable;
     public Hero(){
         ret = false;
         coordinates = new int[1][2];
+        resurrectAvailable = true;
+        weapons = new Weapon[2];
         fightingWith = null;
         isAlive = true;
         coordinates[0][0]=-540;
-        coordinates[0][1]=45;              //Hardcoded values are from Scene Builder
-        Timer timer = new Timer(true);
-        TimerTask timerTask= this;
-        baseLevel = coordinates[0][1];
-        timer.schedule(timerTask,0,150);
+        coordinates[0][1]=45;
+        changeYCoordinate();
     }
 
     @Override
@@ -80,5 +81,42 @@ public class Hero extends TimerTask implements Serializable{
     }
     public void setAlive(boolean val){
         isAlive = val;
+    }
+
+    @Override
+    public void changeYCoordinate() {
+        Timer timer = new Timer(true);
+        TimerTask timerTask= this;
+        baseLevel = coordinates[0][1];
+        timer.schedule(timerTask,0,150);
+    }
+    public void addWeapons(Weapon weapon,WeaponChest chest){
+        if (chest.getWeaponType() == 0){
+            if (weapons[0] == null)
+                weapons[0] = weapon;
+            else
+                weapons[0].setLevel(weapons[0].getLevel()+1);
+        }
+        if (chest.getWeaponType() == 1){
+            if (weapons[1] == null)
+                weapons[1] = weapon;
+            else
+                weapons[1].setLevel(weapons[1].getLevel()+1);
+        }
+    }
+    public Weapon[] getWeapons() {
+        return weapons;
+    }
+    public void setWeapons(int index, Weapon weapon ){
+        if (index==0)
+            weapons[0] = weapon;
+        else
+            weapons[1] = weapon;
+    }
+    public void setResurrectAvailable(boolean val){
+        resurrectAvailable = val;
+    }
+    public boolean isResurrectAvailable() {
+        return resurrectAvailable;
     }
 }
