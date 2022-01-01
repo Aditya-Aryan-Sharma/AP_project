@@ -54,8 +54,6 @@ public class MainController {
     public void loadGame(ActionEvent event) throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("playGameWindow.fxml"));
         root = loader.load();
-        PlayGameWindowController playGameWindowController=loader.getController();
-        playGameWindowController.setLoadedGame(true);
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
