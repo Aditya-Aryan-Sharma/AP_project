@@ -5,11 +5,13 @@ import java.io.Serializable;
 public class Weapon implements Serializable {
     private int damagePerHit;
     private int level;
-    public Weapon(){
+    private final int weaponType;
+    public Weapon(int type){
         this.level=1;
         this.damagePerHit=20;
+        weaponType = type;
     }
-    public void setDamagePerHit(int damage){
+    private void setDamagePerHit(int damage){
         damagePerHit=damage;
     }
     public int getDamagePerHit(){
@@ -17,8 +19,12 @@ public class Weapon implements Serializable {
     }
     public void setLevel(int level){
         this.level=level;
+        setDamagePerHit(getDamagePerHit()+20);
     }
     public int getLevel(){
         return this.level;
+    }
+    public int getWeaponType(){
+        return weaponType;
     }
 }
