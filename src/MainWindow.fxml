@@ -9,7 +9,7 @@
 
 <AnchorPane fx:id="scenePane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.game.MainController">
    <children>
-      <Group>
+      <Group fx:id="myGroup">
          <children>
             <ImageView fitHeight="403.0" fitWidth="630.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -26,17 +26,7 @@
                   <Font size="13.0" />
                </font>
             </Button>
-            <Button blendMode="HARD_LIGHT" layoutX="499.0" layoutY="130.0" mnemonicParsing="false" onAction="#loadGame" prefHeight="35.0" prefWidth="86.0" text="Load Game">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Button>
-            <Button blendMode="HARD_LIGHT" layoutX="499.0" layoutY="172.0" mnemonicParsing="false" onAction="#credits" prefHeight="35.0" prefWidth="86.0" text="Credits">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Button>
-            <Button blendMode="HARD_LIGHT" layoutX="498.0" layoutY="219.0" mnemonicParsing="false" onAction="#exit" prefHeight="35.0" prefWidth="86.0" text="Quit Game">
+            <Button blendMode="HARD_LIGHT" layoutX="499.0" layoutY="127.0" mnemonicParsing="false" onAction="#exit" prefHeight="35.0" prefWidth="86.0" text="Quit Game">
                <font>
                   <Font size="13.0" />
                </font>
