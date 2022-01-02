@@ -9,20 +9,20 @@
 
 <AnchorPane blendMode="HARD_LIGHT" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.game.HighScoreController">
    <children>
-      <Label layoutX="185.0" layoutY="14.0" text="LeaderBoard">
+      <Label layoutX="171.0" layoutY="-7.0" text="LeaderBoard">
          <font>
             <Font size="50.0" />
          </font>
       </Label>
-      <Button blendMode="HARD_LIGHT" layoutX="525.0" layoutY="37.0" mnemonicParsing="false" onAction="#back" text="Close">
+      <Button blendMode="HARD_LIGHT" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#back" style="-fx-background-color: red;" text="Close" textFill="WHITE">
          <font>
-            <Font size="13.0" />
+            <Font size="14.0" />
          </font>
       </Button>
-      <TableView fx:id="tableView" layoutX="22.0" layoutY="83.0" prefHeight="298.0" prefWidth="556.0">
+      <TableView fx:id="tableView" layoutX="22.0" layoutY="57.0" prefHeight="298.0" prefWidth="556.0">
         <columns>
-          <TableColumn prefWidth="274.40009689331055" text="Player Name" />
-          <TableColumn minWidth="0.0" prefWidth="282.39996337890625" text="High Score" />
+          <TableColumn fx:id="name" prefWidth="274.40009689331055" text="Player Name" />
+          <TableColumn fx:id="score" minWidth="0.0" prefWidth="282.39996337890625" text="High Score" />
         </columns>
       </TableView>
    </children>
