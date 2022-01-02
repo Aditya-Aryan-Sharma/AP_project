@@ -22,7 +22,6 @@
             <Image url="@Photos/Hammer.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="btn" layoutX="672.0" layoutY="431.0" mnemonicParsing="false" onAction="#moveHero" text="Move" />
       <Label fx:id="hammerLevel" layoutX="353.0" layoutY="433.0" prefHeight="20.0" prefWidth="19.0" text="0" />
       <ImageView fx:id="swordIcon" fitHeight="80.0" fitWidth="109.0" layoutX="383.0" layoutY="373.0" opacity="0.36" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -30,7 +29,6 @@
          </image>
       </ImageView>
       <Label fx:id="swordLevel" layoutX="455.0" layoutY="433.0" prefHeight="22.0" prefWidth="19.0" text="0" />
-      <Button blendMode="HARD_LIGHT" layoutX="15.0" layoutY="431.0" mnemonicParsing="false" onAction="#back" text="Close" />
       <Group fx:id="myGroup" layoutX="673.0" layoutY="175.0">
          <children>
             <ImageView fitHeight="125.0" fitWidth="90.0" layoutX="1147.0" layoutY="-64.0" pickOnBounds="true" preserveRatio="true">
@@ -61,17 +59,17 @@
                   <Image url="@Photos/1.0.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="20.0" fitWidth="8.0" layoutX="501.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="coin7" fitHeight="20.0" fitWidth="8.0" layoutX="485.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Photos/5.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="20.0" fitWidth="8.0" layoutX="516.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="coin8" fitHeight="20.0" fitWidth="8.0" layoutX="510.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Photos/5.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="20.0" fitWidth="8.0" layoutX="533.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="coin9" fitHeight="20.0" fitWidth="8.0" layoutX="535.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Photos/5.png" />
                </image>
@@ -81,7 +79,7 @@
                   <Image url="@Photos/1.2.3.jpg" />
                </image>
             </ImageView>
-            <ImageView fitHeight="227.0" fitWidth="168.0" layoutX="471.0" layoutY="-66.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="227.0" fitWidth="168.0" layoutX="474.0" layoutY="-61.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Photos/1.0.png" />
                </image>
@@ -103,32 +101,32 @@
             </ImageView>
             <Group layoutX="1254.0" layoutY="-14.0">
                <children>
-                  <ImageView fitHeight="20.0" fitWidth="8.0" layoutX="20.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="coin14" fitHeight="20.0" fitWidth="8.0" layoutX="20.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Photos/5.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="20.0" fitWidth="8.0" layoutX="20.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="coin13" fitHeight="20.0" fitWidth="8.0" layoutX="20.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Photos/5.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="20.0" fitWidth="8.0" layoutX="44.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="coin15" fitHeight="20.0" fitWidth="8.0" layoutX="44.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Photos/5.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="20.0" fitWidth="8.0" layoutX="-4.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="coin11" fitHeight="20.0" fitWidth="8.0" layoutX="-4.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Photos/5.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="20.0" fitWidth="8.0" layoutX="-4.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="coin12" fitHeight="20.0" fitWidth="8.0" layoutX="-4.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Photos/5.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="20.0" fitWidth="8.0" layoutX="44.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="coin16" fitHeight="20.0" fitWidth="8.0" layoutX="44.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Photos/5.png" />
                      </image>
@@ -140,7 +138,7 @@
                   <Image url="@Photos/p1.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="221.0" fitWidth="188.0" layoutX="1294.0" layoutY="-73.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="221.0" fitWidth="188.0" layoutX="1297.0" layoutY="-70.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Photos/1.png" />
                </image>
@@ -175,7 +173,7 @@
                   <Image url="@Photos/Orc2.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="20.0" fitWidth="8.0" layoutX="549.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="coin10" fitHeight="20.0" fitWidth="8.0" layoutX="549.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Photos/5.png" />
                </image>
@@ -188,6 +186,11 @@
             <ImageView fx:id="island15" fitHeight="214.0" fitWidth="162.0" layoutX="1934.0" layoutY="-61.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Photos/1.0.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="power" fitHeight="35.0" fitWidth="42.0" layoutX="1331.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Photos/141528-energy-symbol-hq-image-free.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="222.0" fitWidth="274.0" layoutX="2141.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
@@ -235,7 +238,7 @@
                   <Image url="file:///C:/Users/shubh/IdeaProjects/Game/src/main/resources/com/example/game/Photos/1.4.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="247.0" fitWidth="325.0" layoutX="-599.0" layoutY="-51.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="247.0" fitWidth="325.0" layoutX="-599.0" layoutY="-52.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="file:///C:/Users/shubh/IdeaProjects/Game/src/main/resources/com/example/game/Photos/1.2-removebg-preview%20(1).png" />
                </image>
@@ -250,32 +253,32 @@
                   <Image url="file:///C:/Users/shubh/IdeaProjects/Game/src/main/resources/com/example/game/Photos/1.2.3.jpg" />
                </image>
             </ImageView>
-            <ImageView fitHeight="20.0" fitWidth="8.0" layoutX="-310.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="coin5" fitHeight="20.0" fitWidth="8.0" layoutX="-365.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="file:///C:/Users/shubh/IdeaProjects/Game/src/main/resources/com/example/game/Photos/5.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="20.0" fitWidth="8.0" layoutX="-310.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="coin6" fitHeight="20.0" fitWidth="8.0" layoutX="-365.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="file:///C:/Users/shubh/IdeaProjects/Game/src/main/resources/com/example/game/Photos/5.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="20.0" fitWidth="8.0" layoutX="-291.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="coin3" fitHeight="20.0" fitWidth="8.0" layoutX="-374.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="file:///C:/Users/shubh/IdeaProjects/Game/src/main/resources/com/example/game/Photos/5.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="20.0" fitWidth="8.0" layoutX="-291.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="coin2" fitHeight="20.0" fitWidth="8.0" layoutX="-385.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="file:///C:/Users/shubh/IdeaProjects/Game/src/main/resources/com/example/game/Photos/5.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="20.0" fitWidth="8.0" layoutX="-273.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="coin1" fitHeight="20.0" fitWidth="8.0" layoutX="-385.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="file:///C:/Users/shubh/IdeaProjects/Game/src/main/resources/com/example/game/Photos/5.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="8.0" fitWidth="8.0" layoutX="-273.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="coin4" fitHeight="8.0" fitWidth="8.0" layoutX="-375.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="file:///C:/Users/shubh/IdeaProjects/Game/src/main/resources/com/example/game/Photos/5.png" />
                </image>
@@ -322,12 +325,6 @@
             <Image url="@Photos/5.png" />
          </image>
       </ImageView>
-      <Group fx:id="textGroup" layoutX="208.0" layoutY="-58.0">
-         <children>
-            <Label layoutX="4.0" layoutY="6.0" prefHeight="71.0" prefWidth="117.0" text="Enter Hero Name" />
-            <TextField fx:id="textField" layoutX="111.0" layoutY="31.0" onAction="#getUserName" />
-         </children>
-      </Group>
       <Group fx:id="heroGroup" layoutX="125.0" layoutY="211.0">
          <children>
             <ImageView fx:id="myImage" fitHeight="26.0" fitWidth="37.0" layoutX="1.0" layoutY="2.0" onSwipeRight="#moveHero" pickOnBounds="true" preserveRatio="true">
@@ -352,6 +349,12 @@
             <Image url="@Photos/1.0.jpg" />
          </image>
       </ImageView>
+      <Group fx:id="textGroup" layoutX="208.0" layoutY="-58.0">
+         <children>
+            <Label layoutX="4.0" layoutY="6.0" prefHeight="71.0" prefWidth="117.0" text="Enter Hero Name" />
+            <TextField fx:id="textField" layoutX="111.0" layoutY="31.0" onAction="#getUserName" />
+         </children>
+      </Group>
       <Label fx:id="lose" layoutX="238.0" layoutY="59.0" prefHeight="80.0" prefWidth="144.0" text="You Lose" textFill="#ea0606">
          <font>
             <Font size="35.0" />
@@ -362,5 +365,7 @@
             <Font size="35.0" />
          </font>
       </Label>
+      <Button fx:id="btn" layoutX="672.0" layoutY="431.0" mnemonicParsing="false" onAction="#moveHero" text="Move" />
+      <Button blendMode="HARD_LIGHT" layoutX="15.0" layoutY="431.0" mnemonicParsing="false" onAction="#back" text="Close" />
    </children>
 </AnchorPane>
