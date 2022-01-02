@@ -1,4 +1,4 @@
-package com.example.willhero;
+package com.example.game;
 
 import javafx.animation.*;
 import javafx.application.Platform;
@@ -49,7 +49,8 @@ public class PlayGameWindowController extends TimerTask implements Initializable
         translateTransition.setAutoReverse(reverse);
         translateTransition.play();
     }
-
+    @FXML
+    private ImageView power;
     @FXML
     private Button btn;
     @FXML
@@ -188,9 +189,10 @@ public class PlayGameWindowController extends TimerTask implements Initializable
                 Platform.runLater(new Runnable() {
                     public void run() {
                         takeChest(treasureChest1);takeChest(treasureChest2);takeChest(treasureChest3);takeChest(coinChest);
+                        collectCoin(user.getMyHero().getXCoordinates(),user.getMyHero().getYCoordinates());
                         try {
+                            jumpIslands();getPower();
                             explodeTNT(TNT1);explodeTNT(TNT3);explodeTNT(TNT2);
-                            jumpIslands();//fightOrc();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -220,7 +222,6 @@ public class PlayGameWindowController extends TimerTask implements Initializable
         user.setName(textField.getText());
         Animate(textGroup,Duration.millis(650),0,-175,true);
         fadeAnimation(myGroup,Duration.millis(2500),0.36,1.0);
-        System.out.println(user.getName());
     }
     public void pressSettingButton() throws IOException {
         Stage stage = new Stage();
@@ -230,22 +231,9 @@ public class PlayGameWindowController extends TimerTask implements Initializable
         stage.setWidth(200);
         Button button1 = new Button("Save Game");
         Button reloadGame = new Button("Reload Game");
-//        Button credit = new Button("Credit");
-        CheckBox checkBox = new CheckBox("Music");
-
-        reloadGame.setPrefWidth(90); reloadGame.setPrefHeight(25);
-//        credit.setPrefWidth(90); credit.setPrefHeight(25);
-        button1.setPrefWidth(90); button1.setPrefHeight(25);
-
-        button1.setTextAlignment(TextAlignment.CENTER);
-        reloadGame.setTextAlignment(TextAlignment.CENTER);
-//        credit.setTextAlignment(TextAlignment.CENTER);
-
-        button1.setLayoutX(65); button1.setLayoutY(20);
-        reloadGame.setLayoutX(65); reloadGame.setLayoutY(60);
-//        credit.setLayoutX(65); credit.setLayoutY(100);
-        checkBox.setLayoutX(65); checkBox.setLayoutY(140);
-
+        button1.setPrefWidth(80);
+        button1.setTextAlignment(TextAlignment.LEFT);
+        button1.setLayoutX(190); button1.setLayoutY(80);
         button1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -257,7 +245,25 @@ public class PlayGameWindowController extends TimerTask implements Initializable
                 }
             }
         });
+        button1.setTextAlignment(TextAlignment.RIGHT);
+        Label label = new Label("CUSTOMISE GAMEPLAY");
+        label.setLayoutX(80);label.setLayoutY(20);
+        Label creditsLabel = new Label("Press to view Credits");
+        creditsLabel.setLayoutX(20);creditsLabel.setLayoutY(200);
+        Label saveLabel = new Label("Press to Save Progress");
+        Label reloadLabel = new Label("Press to continue Saved Game");
+        Button credits = new Button("credits");
+        Label show = new Label("Developed By Aditya and Tushar");
+        fadeAnimation(show,Duration.millis(1),1.0,0);
+        show.setLayoutX(70);show.setLayoutY(275);
 
+        credits.setLayoutX(190);credits.setLayoutY(200);
+        credits.setOnAction(actionEvent -> {
+            fadeAnimation(show,Duration.millis(750),0,1.0);
+        });
+        reloadLabel.setLayoutX(20);reloadLabel.setLayoutY(145);
+        saveLabel.setLayoutX(20);saveLabel.setLayoutY(85);
+        reloadGame.setLayoutX(190); reloadGame.setLayoutY(140);
         reloadGame.setOnAction(event -> {
             try {
                 deSerialise(event);
@@ -266,20 +272,18 @@ public class PlayGameWindowController extends TimerTask implements Initializable
                 e.printStackTrace();
             }
         });
-
-        anchorPane.getChildren().addAll(button1, checkBox,reloadGame);
+        anchorPane.getChildren().addAll(button1,reloadGame,saveLabel,reloadLabel,label,creditsLabel,credits,show);
 
         Image image = new Image("file:///C:/Users/shubh/IdeaProjects/Game/src/main/resources/com/example/game/Photos/1.0.png");
 
         Scene scene = new Scene(anchorPane);
-        stage.setWidth(230);
-        stage.setHeight(250);
+        stage.setWidth(300);
+        stage.setHeight(400);
         stage.setResizable(false);
         stage.getIcons().setAll(image);
         stage.setScene(scene);
         stage.show();
     }
-
     public void serialize() throws IOException{
         ObjectOutputStream outUser=null;
         try{
@@ -317,9 +321,6 @@ public class PlayGameWindowController extends TimerTask implements Initializable
         ObjectInputStream in = null;
         ObjectInputStream inOrc = null;
         User myUser = this.user;
-        /*Orc rOrc = this.redOrc;
-        Orc gOrc = this.greenOrc;
-        Orc gBoss = this.greenBoss;*/
         try{
             in = new ObjectInputStream(new FileInputStream("C:\\Users\\shubh\\IdeaProjects\\Game\\src\\main\\java\\com\\example\\game\\savedUsers.txt"));
             this.user = (User)in.readObject();
@@ -378,7 +379,6 @@ public class PlayGameWindowController extends TimerTask implements Initializable
     public void moveHero() throws InterruptedException {
         position+=25;
         user.setScore(user.getScore()+1);
-        collectCoin(user.getMyHero().getXCoordinates(), user.getMyHero().getYCoordinates());
         coordinate.setText(String.valueOf(user.getScore()));
         coins.setText(String.valueOf(user.getCoinsEarned()));
         myGroup.setTranslateX(-position);
@@ -393,9 +393,6 @@ public class PlayGameWindowController extends TimerTask implements Initializable
         else
             swordLevel.setText("0");
         fightOrc();
-        System.out.println("Orc"+redOrc.getXCoordinates()+" "+redOrc.getYCoordinates());
-        System.out.println("Hero:"+user.getMyHero().getXCoordinates()+" "+user.getMyHero().getYCoordinates());
-        System.out.println("TChest2: "+ treasureChest2.getLayoutX()+ " "+ treasureChest2.getLayoutY());
     }
     public boolean isCollide(int coordinate1,int coordinate2,int range){
         return coordinate1 <= coordinate2 + range && coordinate1 >= coordinate2 - range;
@@ -410,12 +407,14 @@ public class PlayGameWindowController extends TimerTask implements Initializable
             if (chest == treasureChest3)
                 openChest.setLayoutX(1665);
             if (chest == coinChest) {
+                CoinChest coinChest = new CoinChest();
                 openCoinChest.setLayoutX(1020);
                 openCoinChest.setLayoutY(40);
-                user.setCoinsEarned(user.getCoinsEarned() + 30);
+                user.setCoinsEarned(user.getCoinsEarned() + coinChest.getCoins());
                 return;
             }
             chest1 = new WeaponChest();
+            user.setCoinsEarned(user.getCoinsEarned() + chest1.getCoins());
             if (chest1.getWeaponType() == 0) {
                 myHammer.setVisible(true);
                 mySword.setVisible(false);
@@ -443,7 +442,7 @@ public class PlayGameWindowController extends TimerTask implements Initializable
             }
         }
     }
-    public synchronized void explodeTNT(ImageView tnt) throws InterruptedException {
+    public void explodeTNT(ImageView tnt) throws InterruptedException {
         if (isCollide(user.getMyHero().getXCoordinates(),(int) tnt.getLayoutX(),15) && isCollide(user.getMyHero().getYCoordinates(), (int) tnt.getLayoutY(),20)){
             int i = 0;
             while(i<2) {
@@ -459,6 +458,8 @@ public class PlayGameWindowController extends TimerTask implements Initializable
             if (tnt==TNT3)
                 explosion.setLayoutX(310);
             fadeAnimation(explosion,Duration.millis(3500),1.0,0);
+            user.getMyHero().setAlive(false);
+            tnt.setLayoutX(-540);
             resurrectHero();
         }
     }
@@ -511,6 +512,7 @@ public class PlayGameWindowController extends TimerTask implements Initializable
                 Animate(myImage1,Duration.millis(300),0,650,false);
                 myImage1.setLayoutY(1500);
                 redOrc.setXCoordinate(-540);
+
             }
         }
         if (user.getMyHero().fightingWith == greenOrc){
@@ -542,7 +544,7 @@ public class PlayGameWindowController extends TimerTask implements Initializable
                     @Override
                     public void handle(ActionEvent actionEvent) {
                         try {
-                            checkWinner(actionEvent);
+                            endGame(actionEvent);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -551,17 +553,18 @@ public class PlayGameWindowController extends TimerTask implements Initializable
             }
         }
     }
-    public void checkWinner(ActionEvent actionEvent) throws InterruptedException {
-        Thread.sleep(1500);
-        endGame(actionEvent);
-    }
-    public void resurrectHero() throws InterruptedException {
-        if ((user.getCoinsEarned()<0 || ! user.getMyHero().isResurrectAvailable()) /*&& ! user.getMyHero().isAlive()*/) {
+
+    public synchronized void resurrectHero() throws InterruptedException {
+        if ((user.getCoinsEarned() < 5 || ! user.getMyHero().isResurrectAvailable()) /*&& ! user.getMyHero().isAlive()*/) {
             lose.setVisible(true);
             btn.setOnAction(new EventHandler<>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    endGame(actionEvent);
+                    try {
+                        endGame(actionEvent);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             return;
@@ -571,6 +574,7 @@ public class PlayGameWindowController extends TimerTask implements Initializable
             alert.setTitle("Save Hero");
             alert.setContentText("Do you want to save the Hero ?");
             user.getMyHero().setResurrectAvailable(false);
+            Thread.sleep(5);
             try {
                 if (alert.showAndWait().get() == ButtonType.OK) {
                     user.setCoinsEarned(user.getCoinsEarned() - 5);
@@ -593,59 +597,83 @@ public class PlayGameWindowController extends TimerTask implements Initializable
             }
         }
     }
-    public void endGame(ActionEvent actionEvent){
+    public void endGame(ActionEvent actionEvent) throws InterruptedException {
+        Thread.sleep(750);
         Parent root = null;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("HighScore.fxml"));
         try {
-            root = FXMLLoader.load(getClass().getResource("HighScore.fxml"));
+            root = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        HighScoreController highScoreController = loader.getController();
+        highScoreController.addEntry(user);
         stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         assert root != null;
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
+    public void getPower() throws InterruptedException {
+        int i = 0;
+        if (isCollide((int) power.getLayoutX(),user.getMyHero().getXCoordinates(),13) && isCollide((int)power.getLayoutY(),user.getMyHero().getYCoordinates(),25)){
+            Thread.sleep(1000);
+            user.getMyHero().setXCoordinates(user.getMyHero().getXCoordinates()+250);
+            position+=250;
+            user.setScore(user.getScore()+10);
+            myGroup.setTranslateX(-position);
+            while(i < 5){
+                if (!checkAbyss(user.getMyHero().getXCoordinates() + 25 * i)) {
+                    user.getMyHero().setXCoordinates(user.getMyHero().getXCoordinates() + 25 * i);
+                    fadeAnimation(heroGroup, Duration.millis(200), 0, 1.0);
+                    position += 25 * i;
+                    user.setScore(user.getScore()+i);
+                    myGroup.setTranslateX(-position);
+                    break;
+                }
+                i++;
+            }
+        }
+    }
+    public void collectCoin(int x, int y) {
+        if (isCollide((int) coin1.getLayoutX(),x,10) && isCollide((int)coin1.getLayoutY(),y,13)) {
+            coin1.setLayoutX(-600);
+            coin2.setLayoutX(-600);
+            user.setCoinsEarned(user.getCoinsEarned() + 2);
+
+        } else if (isCollide((int) coin3.getLayoutX(),x,13) && isCollide((int)coin3.getLayoutY(),y,10)) {
+            coin3.setLayoutX(-600);
+            coin4.setLayoutX(-600);
+            coin5.setLayoutX(-600);
+            coin6.setLayoutX(-600);
+            user.setCoinsEarned(user.getCoinsEarned() + 4);
+        }
+        //}
+        else if (x == 485 && coin7.getLayoutX()!=-600) {
+            coin7.setLayoutX(-600);
+            user.setCoinsEarned(user.getCoinsEarned()+1);
+        }
+        if(y>=45 && y<=60){ if (x == 510 && coin8.getLayoutX()!=-600) {
+            coin8.setLayoutX(-600);
+            user.setCoinsEarned(user.getCoinsEarned() + 1);
+        } else if (x == 535 && coin9.getLayoutX()!=-600) {
+            coin9.setLayoutX(-600);
+            coin10.setLayoutX(-600);
+            user.setCoinsEarned(user.getCoinsEarned() + 2);
+        }
+        }else if (x == 1235 && coin11.getLayoutX()!=-600) {
+            coin12.setLayoutX(-600);
+            coin11.setLayoutX(-600);
+            user.setCoinsEarned(user.getCoinsEarned() + 2);
+        } else if (x == 1260 && y>=75 && coin13.getLayoutX()!=-600) {
+            coin13.setLayoutX(-600);
+            coin14.setLayoutX(-600);
+            coin15.setLayoutX(-600);
+            coin16.setLayoutX(-600);
+            user.setCoinsEarned(user.getCoinsEarned() + 4);
+        }
+    }
     @Override
     public void run() {
-    }
-
-     public void collectCoin(int x, int y) {
-//        if(y>=45 && y<=60){
-        if (x == -265) {
-            coin1.setVisible(false);
-            coin2.setVisible(false);
-            user.setCoinsEarned(user.getCoinsEarned() + 4);
-        } else if (x == -240) {
-            coin3.setVisible(false);
-            coin4.setVisible(false);
-            coin5.setVisible(false);
-            coin6.setVisible(false);
-            user.setCoinsEarned(user.getCoinsEarned() + 8);
-        }
-//    }
-        else if (x == 485) {
-            coin7.setVisible(false);
-            user.setCoinsEarned(user.getCoinsEarned()+2);
-        }
-        if(y>=45 && y<=60){ if (x == 510) {
-            coin8.setVisible(false);
-            user.setCoinsEarned(user.getCoinsEarned() + 2);
-        } else if (x == 535) {
-            coin9.setVisible(false);
-            coin10.setVisible(false);
-            user.setCoinsEarned(user.getCoinsEarned() + 4);
-        }
-        }else if (x == 1235) {
-            coin12.setVisible(false);
-            coin11.setVisible(false);
-            user.setCoinsEarned(user.getCoinsEarned()+4);
-        } else if (x == 1260 && y>=75) {
-            coin13.setVisible(false);
-            coin14.setVisible(false);
-            coin15.setVisible(false);
-            coin16.setVisible(false);
-            user.setCoinsEarned(user.getCoinsEarned()+8);
-        }
     }
 }
