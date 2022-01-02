@@ -610,28 +610,33 @@ public class PlayGameWindowController extends TimerTask implements Initializable
     public void run() {
     }
 
-    public void collectCoin(int x, int y){
+     public void collectCoin(int x, int y) {
+//        if(y>=45 && y<=60){
         if (x == -265) {
             coin1.setVisible(false);
             coin2.setVisible(false);
-            user.setCoinsEarned(user.getCoinsEarned()+4);
+            user.setCoinsEarned(user.getCoinsEarned() + 4);
         } else if (x == -240) {
             coin3.setVisible(false);
             coin4.setVisible(false);
             coin5.setVisible(false);
             coin6.setVisible(false);
-            user.setCoinsEarned(user.getCoinsEarned()+8);
-        } else if (x == 485) {
+            user.setCoinsEarned(user.getCoinsEarned() + 8);
+        }
+//    }
+        else if (x == 485) {
             coin7.setVisible(false);
             user.setCoinsEarned(user.getCoinsEarned()+2);
-        } else if (x == 510) {
+        }
+        if(y>=45 && y<=60){ if (x == 510) {
             coin8.setVisible(false);
-            user.setCoinsEarned(user.getCoinsEarned()+2);
+            user.setCoinsEarned(user.getCoinsEarned() + 2);
         } else if (x == 535) {
             coin9.setVisible(false);
             coin10.setVisible(false);
-            user.setCoinsEarned(user.getCoinsEarned()+4);
-        } else if (x == 1235) {
+            user.setCoinsEarned(user.getCoinsEarned() + 4);
+        }
+        }else if (x == 1235) {
             coin12.setVisible(false);
             coin11.setVisible(false);
             user.setCoinsEarned(user.getCoinsEarned()+4);
