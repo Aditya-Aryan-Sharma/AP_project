@@ -7,7 +7,6 @@ public class User implements Serializable {
     private String name;
     private int coinsEarned;
     private Hero myHero;
-    private PlayGameWindowController myGame;
 
     public User(String name,int score ){
         this.name=name;
