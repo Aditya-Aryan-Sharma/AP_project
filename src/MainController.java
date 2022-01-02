@@ -23,10 +23,7 @@ public class MainController {
 
     private Stage stage;
     private Scene scene;
-    private Parent root;
 
-    @FXML
-    private Button logoutButton;
     @FXML
     private AnchorPane scenePane;
 
@@ -45,15 +42,6 @@ public class MainController {
 
     public void highScore(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("HighScore.fxml"));
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void loadGame(ActionEvent event) throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("playGameWindow.fxml"));
-        root = loader.load();
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
