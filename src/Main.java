@@ -1,13 +1,11 @@
 package com.example.game;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -25,10 +23,8 @@ public class Main extends Application {
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
             stage.setScene(scene);
             stage.setTitle("Will Hero");
-
-//            Image image_ = new Image("file:///D:/trial/1.0.jpg");
-
-            Image image = new Image("D:\\SEM_3\\WillHero\\Icon.png");
+            
+            Image image = new Image("file:///C:/Users/shubh/IdeaProjects/Game/src/main/resources/com/example/game/Photos/Icon.png");
             stage.getIcons().setAll(image);
             stage.setResizable(false);
             stage.show();
@@ -50,8 +46,6 @@ public class Main extends Application {
         alert.setContentText("Do you want to exit the game?");
 
         if(alert.showAndWait().get() == ButtonType.OK){
-//            stage = (Stage) scenePane.getScene().getWindow();
-//            System.out.println("You successfully logged out!");
             System.out.println("Game closed.");
             stage.close();
         }
